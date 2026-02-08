@@ -15,11 +15,21 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '17'
-          distribution: 'temurin'
+          distribution: 'zulu'
+          cache: 'gradle'
       
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
-        
+      
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+      
+      - name: Run Tests
+        run: ./gradlew test --no-daemon
+      
+      - name: Build Project
+        run: ./gradlew build --no-daemon
+      
       - name: Build APK
         run: ./gradlew assembleDebug --no-daemon
       
